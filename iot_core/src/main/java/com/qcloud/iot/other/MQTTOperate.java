@@ -97,6 +97,8 @@ public class MQTTOperate {
         void onSubscribeCompleted(Status status, IMqttToken asyncActionToken, Object userContext, String errMsg);
 
         void onMessageReceived(final String topic, final MqttMessage message);
+
+        void onUnSubscribeCompleted(Status status, IMqttToken asyncActionToken, Object userContext, String errMsg);
     }
 
     /**
@@ -113,11 +115,13 @@ public class MQTTOperate {
             }
             String logInfo = String.format("onConnectCompleted, status[%s], reconnect[%b], userContext[%s], msg[%s]",
                     status.name(), reconnect, userContextInfo, msg);
+            mListener.onConnectCompleted(status, reconnect, userContext, msg);
         }
 
         @Override
         public void onConnectionLost(Throwable cause) {
             String logInfo = String.format("onConnectionLost, cause[%s]", cause.toString());
+            mListener.onConnectionLost(cause);
         }
 
         @Override
@@ -127,6 +131,7 @@ public class MQTTOperate {
                 userContextInfo = userContext.toString();
             }
             String logInfo = String.format("onDisconnectCompleted, status[%s], userContext[%s], msg[%s]", status.name(), userContextInfo, msg);
+            mListener.onDisconnectCompleted(status, userContext, msg);
         }
 
         @Override
@@ -137,6 +142,7 @@ public class MQTTOperate {
             }
             String logInfo = String.format("onPublishCompleted, status[%s], topics[%s],  userContext[%s], errMsg[%s]",
                     status.name(), Arrays.toString(token.getTopics()), userContextInfo, errMsg);
+            mListener.onPublishCompleted(status, token, userContext, errMsg);
         }
 
         @Override
@@ -148,6 +154,7 @@ public class MQTTOperate {
             }
             String logInfo = String.format("onSubscribeCompleted, status[%s], topics[%s], userContext[%s], errMsg[%s]",
                     status.name(), Arrays.toString(asyncActionToken.getTopics()), userContextInfo, errMsg);
+            mListener.onSubscribeCompleted(status, asyncActionToken, userContext, errMsg);
         }
 
         @Override
@@ -158,6 +165,7 @@ public class MQTTOperate {
             }
             String logInfo = String.format("onUnSubscribeCompleted, status[%s], topics[%s], userContext[%s], errMsg[%s]",
                     status.name(), Arrays.toString(asyncActionToken.getTopics()), userContextInfo, errMsg);
+            mListener.onUnSubscribeCompleted(status, asyncActionToken, userContext, errMsg);
         }
 
         @Override
