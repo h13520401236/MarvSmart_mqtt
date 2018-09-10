@@ -27,12 +27,12 @@ public class MQTTSample {
     /**
      * 产品ID
      */
-    private static final String PRODUCT_ID = "1WHKWZ0YWD";
+    private static String PRODUCT_ID = "";
 
     /**
      * 设备名称
      */
-    public static final String DEVICE_NAME = "DEVICE1";
+    private static String DEVICE_NAME = "";
 
 
     /**
@@ -58,6 +58,8 @@ public class MQTTSample {
     public MQTTSample(Context context, String productID, String deviceId, String secretKey, TXMqttActionCallBack callBack) {
         mContext = context;
         mMqttActionCallBack = callBack;
+        PRODUCT_ID = productID;
+        DEVICE_NAME = deviceId;
         mMqttConnection = new TXMqttConnection(mContext, productID, deviceId, secretKey, mMqttActionCallBack);
     }
 
