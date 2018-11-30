@@ -70,6 +70,16 @@ public class MQTTOperate {
         mMQTTSample.publishTopic(operate, data);
     }
 
+    /**
+     * 发布消息
+     *
+     * @param operate 参数名称
+     * @param data    传递数据的map集合
+     */
+    public void mqttPushData2(String operate, HashMap<String, String> data) {
+        mMQTTSample.publishTopic2(operate, data);
+    }
+
     private MQTTRecDataListener mListener;
 
     public void setMQTTListener(MQTTRecDataListener listener) {

@@ -154,6 +154,21 @@ public class MQTTSample {
     }
 
     /**
+     * 取消订阅主题
+     *
+     * @param topicName 主题名
+     */
+    public void unSubscribeTopic2(String topicName) {
+        // 主题
+//        String topic = getTopic(topicName);
+        // 用户上下文（请求实例）
+        MQTTRequest mqttRequest = new MQTTRequest("unSubscribeTopic", requestID.getAndIncrement());
+
+        // 取消订阅主题
+        mMqttConnection.unSubscribe(topicName, mqttRequest);
+    }
+
+    /**
      * 发布主题
      */
     public void publishTopic(String topicName, Map<String, String> data) {
@@ -178,6 +193,34 @@ public class MQTTSample {
 
         // 发布主题
         mMqttConnection.publish(topic, message, mqttRequest);
+
+    }
+
+    /**
+     * 发布主题
+     */
+    public void publishTopic2(String topicName, Map<String, String> data) {
+        // 主题
+//        String topic = getTopic(topicName);
+        // MQTT消息
+        MqttMessage message = new MqttMessage();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            for (Map.Entry<String, String> entrys : data.entrySet()) {
+                jsonObject.put(entrys.getKey(), entrys.getValue());
+            }
+        } catch (JSONException e) {
+            TXLog.e(TAG, e, "pack json data failed!");
+        }
+        message.setQos(TXMqttConstants.QOS1);
+        message.setPayload(jsonObject.toString().getBytes());
+
+        // 用户上下文（请求实例）
+        MQTTRequest mqttRequest = new MQTTRequest("publishTopic", requestID.getAndIncrement());
+
+        // 发布主题
+        mMqttConnection.publish(topicName, message, mqttRequest);
 
     }
 
