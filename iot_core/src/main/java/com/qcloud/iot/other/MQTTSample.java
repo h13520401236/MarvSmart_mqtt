@@ -122,6 +122,23 @@ public class MQTTSample {
     }
 
     /**
+     * 订阅主题
+     *
+     * @param topicName 主题名
+     */
+    public void subscribeTopic2(String topicName) {
+        // 主题
+//        String topic = getTopic(topicName);
+        // QOS等级
+        int qos = TXMqttConstants.QOS1;
+        // 用户上下文（请求实例）
+        MQTTRequest mqttRequest = new MQTTRequest("subscribeTopic", requestID.getAndIncrement());
+
+        // 订阅主题
+        mMqttConnection.subscribe(topicName, qos, mqttRequest);
+    }
+
+    /**
      * 取消订阅主题
      *
      * @param topicName 主题名

@@ -47,6 +47,15 @@ public class MQTTOperate {
     }
 
     /**
+     * 订阅
+     *
+     * @param operate 操作名称
+     */
+    public void mqttSubscribeTopic2(String operate) {
+        mMQTTSample.subscribeTopic2(operate);
+    }
+
+    /**
      * 取消订阅
      *
      * @param operate 操作名称
